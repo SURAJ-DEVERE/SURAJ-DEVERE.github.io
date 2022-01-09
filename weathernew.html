@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        body{
+            /* background-color: #00bee4; */
+            background-image: url("https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fHdlYXRoZXJ8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60");
+            background-repeat: no-repeat;
+            background-size: cover;
+            color: white;
+        }
+        #firstdiv{
+            /* border: 1px solid red; */
+            width: 100%;
+            height: 80px;
+            /* background-color: #00bee4; */
+        }
+        #searchdiv{
+            margin: auto;
+            width: 40%;
+            display: flex;
+            /* margin-top: 30px; */
+        }
+        #place{
+            font-size: 25px;
+            width: 100%;
+            border: hidden;
+        }
+        #container{
+            /* border: 1px solid red; */
+            height:fit-content;
+            /* background-color: #00bee4; */
+            margin-top: 50px;
+        }
+        #weather{
+            display: flex;
+            justify-content: space-around;
+            width: 80%;
+            margin: auto;
+        }
+    .subdiv{
+        /* border: 1px solid black; */
+        width: 30%;
+    }
+    #days{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+    }
+    #subdiv1{
+        height: 300px;
+        padding-left: 30px;
+        border-radius: 10px;
+        box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    }
+    #subdiv2{
+        display: flex;
+        justify-content: space-evenly;
+        border-radius: 10px;
+         height: 300px;
+         box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    }
+    .mapouter{position:relative;text-align:right;width:400px;height:300px;}.gmap_canvas {overflow:hidden;background:none!important;width:300px;height:200px;}.gmap_iframe {width:400px!important;height:300px!important;}
+  
+    #subdiv3{
+        border-radius: 10px;
+        box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    }
+    #d1{
+        box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+      text-align: center;  
+      border-radius: 5px; 
+    }
+    .button1 {
+        color: white;
+        border: none;
+        font-family: Arial, Helvetica, sans-serif;
+
+        background-color: red;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+.button1:hover {
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+    </style>
+  
+    <title>Weather24/7</title>
+    <link rel="icon" href="weather.png" sizes="16x16" type="image/png">
+    <script src="https://code.iconify.design/2/2.1.0/iconify.min.js"></script>
+</head>
+<body>
+    <div id="firstdiv">
+        <h1 style="text-align: center;">जानिये मौसम का हाल</h1>
+   
+        <div id="searchdiv">
+            <span class="iconify" style="height: 50px; width: 50px;background-color: white; color: black;" data-icon="bytesize:search"></span>
+
+            <input id="place"  type="text"  placeholder="Search . . . ">
+        
+            <button class="button1" style="padding: 0px 30px;"  onclick="getWeather()">खोजे</button>
+        </div>
+
+    </div>
+  
+
+<div id="container">
+    <div id="weather">
+        <div id="subdiv1" class="subdiv"> </div>
+        <div id="subdiv2" class="subdiv"></div>
+        <div id="subdiv3" class="subdiv">
+     
+          
+                   
+                  
+              
+
+
+        </div>
+    </div>
+    <div id="days">
+
+
+
+        
+    </div>
+</div>
+    
+</body>
+</html>
+<script>
+
+var subdiv1 = document.getElementById("subdiv1");
+    var subdiv2 = document.getElementById("subdiv2");
+    var subdiv3 = document.getElementById("subdiv3");
+    var days = document.getElementById("days");
+
+async function getWeather(){
+
+    
+    let place = document.querySelector("#place").value;
+
+    let res  = await fetch(
+        `https://api.openweathermap.org/data/2.5/weather?q=${place}&appid=d27d1a1048541eaf9db9de8e6aa7b93a&units=metric&lang=hi`
+    )
+    let data = await res.json();
+   
+    showWeather(data)
+    getdays(data)
+
+    console.log(data)
+}
+
+async function getdays(obj){
+
+    let lat = obj.coord.lat;
+    let lon = obj.coord.lon;
+
+
+let res  = await fetch(
+    `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=current,minutely,hourly,alerts&appid=d27d1a1048541eaf9db9de8e6aa7b93a&lang=hi&units=metric`
+)
+let data = await res.json();
+
+showdays(data.daily)
+console.log(data)
+}
+function showdays(arr){
+   days.innerHTML=null;
+    arr.forEach(elem => {
+        let  weekday = ["सोमवार","मंगलवार"," बुधवार","गुरुवार","शुक्रवार","शनिवार","रविवार "] 
+        let div = document.createElement('div');
+        div.setAttribute("id","d1")
+// var days = document.getElementById("days");
+
+        let icon = elem.weather[0].icon;
+
+        let img = document.createElement("img");
+        img.src =  `http://openweathermap.org/img/wn/${icon}@2x.png`
+
+        let des = document.createElement("p");
+        des.innerText = `${elem.weather[0].description}`;
+
+        var temp_div = document.createElement('div');
+        temp_div.style.display = "flex";
+  
+        let maxtemp = document.createElement("p");
+        maxtemp.innerText = `उच्चतम:${elem.temp.max}°C`;
+
+        let mintemp = document.createElement("p");
+        mintemp.innerText = `न्यूनतम:${elem.temp.min}°C`;
+
+        let date = elem.dt*1000;
+         let  changedate = new Date(date);
+         let  utc = weekday[changedate.getDay()];
+   
+         let days1 =  document.createElement("p");
+         days1.innerText = utc
+    //   temp_div.append(maxtemp,mintemp)
+   div.append(img,des,maxtemp,mintemp,days1)
+        days.append(div)
+
+  
+    });
+
+}
+
+
+
+function showWeather(obj){
+    subdiv1.innerHTML=null
+    subdiv2.innerHTML=null
+    subdiv3.innerHTML=null
+    // var subdiv1 = document.getElementById("subdiv1");
+    // var subdiv2 = document.getElementById("subdiv2");
+    // var subdiv3 = document.getElementById("subdiv3");
+  
+
+    var name = document.createElement("h1");
+    name.innerText = obj.name;
+    name.style.fontSize = "40px"
+
+    let inseconds = obj.dt*1000;
+           let secobj = new Date(inseconds)
+           let changefrmt = secobj.toLocaleString();
+
+           var date = document.createElement("p");
+           date.innerText = changefrmt;
+
+           let temp = document.createElement("h1")
+           temp.innerText = `${obj.main.temp}°C`;
+           temp.style.fontSize = "40px"
+
+           let feels =  document.createElement("p");
+           feels.innerText = `महसूस होता है  ${obj.main.feels_like}°C`
+
+ //===================================================
+           var cloudimg = document.createElement("img")
+           cloudimg.src = `http://openweathermap.org/img/wn/${obj.weather[0].icon}@2x.png`
+          cloudimg.style.width = "200px"
+          cloudimg.style.height = "200px"
+          cloudimg.style.boxShadow= "rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;"
+
+             let des = document.createElement("p");
+             des.innerText = obj.weather[0].description;
+             des.style.textAlign = "center"
+             //============================================
+         let sun = obj.sys.sunrise*1000;
+         let  changesun = new Date(sun);
+         let  utc = changesun.toLocaleString();
+
+             let sunrise = document.createElement("p");
+             sunrise.innerText =  `सूर्योदय : ${utc}`
+     
+             let set = obj.sys.sunset*1000;
+         let  changesun2 = new Date(set);
+         let  utc2 = changesun2.toLocaleString();
+
+             let sunset = document.createElement("p");
+             sunset.innerText =  `सूर्यास्त : ${utc2}`
+
+             var humidity = document.createElement("p");
+           humidity.innerText = `नमी : ${obj.main.humidity}%`;
+
+           var wind = document.createElement("p");
+           wind.innerText = `हवा : ${obj.wind.speed}किमी / घंटा`;
+
+           var pressure = document.createElement("p");
+           pressure.innerText =  `दबाव  : ${obj.main.pressure}  मिलिबार`;
+
+        
+           var  div1 = document.createElement('div')
+           var  div2 = document.createElement('div')
+
+           var  di1 = document.createElement('div')
+           di1.setAttribute("class","mapouter")
+           var  di2 = document.createElement('div')
+           di1.setAttribute("class","gmap_canvas")
+           var iframe = document.createElement("iframe")
+           iframe.setAttribute("class","gmap_iframe")
+           iframe.src = `https://maps.google.com/maps?q=${obj.name}&t=&z=13&ie=UTF8&iwloc=&output=embed`
+ iframe.style.frameborder= "0";
+ iframe.style.scrolling= "no";
+ iframe.style.marginheight= "0";
+ iframe.style.marginwidth= "0";
+   
+      subdiv3.append(iframe)
+    //  di1.append(di2)
+    // di2.append(iframe)
+      div1.append(cloudimg,des)
+      div2.append(sunrise,sunset,humidity,wind,pressure)
+    subdiv1.append(name,date,temp,feels)
+    subdiv2.append(div1,div2)
+   
+
+
+}
+
+</script>
