@@ -1,5 +1,5 @@
 
-![Logo](https://purepng.com/public/uploads/large/weather-forecast-symbol-v7o.png)
+![Logo](https://i.imgur.com/9mYL7FZ.png)
 
 
 # Weather App
