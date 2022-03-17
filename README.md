@@ -52,6 +52,5 @@ https://weatherapp-github-io.vercel.app/
 
 ## Area of Resposibility
 
-- Built Login and Signup page with User authentication.
 - Implemented open weather API successfully.
 - Developed the entire functionality
